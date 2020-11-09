@@ -1,0 +1,48 @@
+{% extends "blog/base2.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<br>
+<div class="container mt-3">
+    <br>
+    <h3 class="text-center mb-3">Conferences</h3>
+    <br>
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-8 mr-auto ml-auto mb-3">
+            <ul class="list-group">
+                {% for conference in conferences %}
+                    {% if conference.is_active %}
+                        <a href="{{ conference.get_absolute_conference_url }}" class="">
+                            <li class="list-group-item d-flex">
+                                <span class="mr-3 text-muted">
+                                    {{ conference.conference_name }}
+                                </span>
+                                 <span class="badge badge-info">Active</span>
+                                {% if conference.conference_creator == request.user %}
+                                 <a class="butt ml-3 mr-2" href="{% url 'conference_update' conference.pk %}">Update</a>
+                                 <a class="delete ml-3 mr-2" href="{% url 'conference_delete' conference.pk %}">Delete</a>
+                                {% endif %}
+                            </li>
+                        </a>
+                    {% else %}
+                        <li class="list-group-item d-flex">
+                            <span class="mr-3 text-muted">
+                                {{ conference.conference_name }}
+                            </span>
+                            {% if conference.is_active %}
+                                <span class="badge badge-info">Active</span>
+                            {% else %}
+                                <span class="badge badge-danger">Not Active</span>
+                            {% endif %}
+                            {% if conference.conference_creator == request.user %}
+                             <a class="butt ml-3 mr-2" href="{% url 'conference_update' conference.pk %}">Update</a>
+                             <a class="delete ml-3 mr-2" href="{% url 'conference_delete' conference.pk %}">Delete</a>
+                            {% endif %}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

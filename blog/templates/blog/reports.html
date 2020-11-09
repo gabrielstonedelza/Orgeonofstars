@@ -1,0 +1,74 @@
+{% extends "blog/base2.html" %}
+
+{% block content %}
+<div class="report-main">
+
+<div class="container">
+    <br>
+    <h3 class="text-center mb-3 animated bounceInDown">Your Reports</h3>
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-5 mb-3 reports">
+            {% for report in reports %}
+              {% if report.user == request.user or request.user.username == "joselyn" %}
+                <ul class="list-group report-group z-depth-1-half">
+                    <li class="list-group-item">
+                        {% if request.user in report.has_read.all %}
+                            <sup style="float: right;"><small class=" text-muted badge badge-default">Read</small></sup>
+                        {% else %}
+                            <sup style="float: right;"><small class="badge badge-danger animated jello infinite">New</small></sup>
+                        {% endif %}
+                        <a href="{{ report.get_absolute_url }}">
+                            <img src="{{ report.user.profile.profile_pic.url }}" alt=""><span class="report-writer">@{{ report.user }}</span><br>
+                            <span class="ml-r report-title text-muted">{{ report.title }}</span>
+                            <small class="date-posted text-muted">{{ report.date_posted|date:"M D Y" }}</small>
+                        </a>
+                    </li>
+                </ul>
+              {% endif %}
+              
+            {% endfor %}
+            <br>
+            <nav aria-label="Page navigation example">
+              <ul class="pagination pagination-circle pg-blue pt-3">
+                {% if all_reports.has_previous %}
+                  <li class="page-item "><a href="?page=1" class="page-link">First</a></li>
+                  <li class="page-item ">
+                    <a class="page-link" href="?page={{ page_range.previous_page_number }}" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                {% endif %}
+    
+                {% for c in all_reports.paginator.page_range %}
+                  {% if all_reports.number == c %}
+                    <li class="page-item active">
+                      <a href="?page={{ c }}" class="page-link">{{ c }}</a>
+                    </li>
+                  {% elif c > all_reports.number|add:"-3" and c < all_reports.number|add:"-3" %}
+                    {{ c }}
+                  {% else %}
+                    <li class="page-item"><a a href="?page={{ c }}" class="page-link">{{c }}</a></li>
+                {% endif %}
+              {% endfor %}
+    
+              {% if all_reports.has_next %}
+                <li class="page-item">
+                    <a href="?page={{ all_reports.next_page_number }}" class="page-link" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                  <li class="page-item"><a href="?page={{ all_reports.paginator.num_pages }}" class="page-link">Last</a></li>
+              {% endif %}
+              </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    CKEDITOR.replace('reportform');
+</script>
+
+{% endblock %}

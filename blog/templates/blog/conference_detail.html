@@ -1,0 +1,12 @@
+{% extends "blog/base2.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<br>
+    <h5>{{ conference.conference_name }}</h5>
+    <button id="connect" class="butt">Connect</button>
+<div class="vid-container">
+    {% for user in my_allowed_users %}
+    <video id="local" autoplay controls></video>
+    {% endfor %}
+</div>
+{% endblock %}

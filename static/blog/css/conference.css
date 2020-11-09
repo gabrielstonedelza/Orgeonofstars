@@ -1,0 +1,12 @@
+.vid-container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(150px, 1fr))[autofit];
+      grid-template-columns: repeat(autofit, minmax(150px, 1fr));
+  gap: 0.5rem;
+}
+
+.vid-container video {
+  border: solid 2px silver;
+}
+/*# sourceMappingURL=conference.css.map */

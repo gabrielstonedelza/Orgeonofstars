@@ -1,0 +1,60 @@
+from django.urls import path
+
+from . import views
+from .views import Volunteers, VolunteerFormView
+from .views import (EventCreateView, EventDetailView, ClientInfoDeleteView,
+                    CreateConferenceView, ConferenceUpdateView, ConferenceDeleteView)
+from users import views as user_views
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('gallery/', views.gallery, name='gallery'),
+    path('success/', views.success_stories, name='success'),
+    path('stories_of_need/', views.needy_stories, name='stories_of_need'),
+    path('inspirational_stories/', views.inspirational_stories,
+         name='inspirational_stories'),
+    path('somevids/', views.some_videos, name='somevids'),
+    path('volunteer/new/', VolunteerFormView.as_view(), name='volunteer_join'),
+    path('volunteers/', Volunteers.as_view(), name='volunteers'),
+    path('ourvolunteers/', views.our_volunteers, name='ourvolunteers'),
+    path('events/', views.events, name='events'),
+    path('join-trip/new/', views.join_trip, name='jointrip'),
+    path('partner/new/', views.become_partner, name='become_a_partner'),
+    path('partners/', views.partners, name='partners'),
+    path('donate/', views.donate, name='donate'),
+    path('reports/', views.report_list, name='reports'),
+    path('report/<int:id>/', views.report_detail, name='report_detail'),
+    path('report/new/', views.create_report, name='create_report'),
+    path('employees/', views.employees, name='employees'),
+    path('post/new/', views.create_post, name='post_new'),
+    path('posts/', views.post_list, name='posts'),
+    path('post/<int:id>/', views.post_detail, name='post_detail'),
+
+    path('main/', views.main, name='main'),
+    path('newsletter/', views.news_letter, name='newsletter_create'),
+    path('event/new/', EventCreateView.as_view(), name='event_new'),
+    path('event/<int:pk>/', EventDetailView.as_view(), name="event_detail"),
+    path('activities/', views.user_activities, name='activities'),
+    path('login/', user_views.login_request, name='login'),
+    path('check-in/', views.check_in, name='checkin'),
+    path('logout/', user_views.logout_request, name='logout'),
+    path('allstudents/', views.our_summer_program, name="students"),
+    path('reviews/', views.reviews, name='reviews'),
+    path('reviews_plus/', views.create_reviews, name='review_create'),
+    path('notifications/', views.user_notifications, name='notifications'),
+
+    path("contact-us/", views.contact_us, name='contact'),
+    path('clients/', views.client_list, name='clients'),
+    path('clients/new/', views.create_client, name='clients_new'),
+    path('client/<int:id>/', views.client_detail, name='client_detail'),
+    path('client/<int:id>/update/', views.client_update, name='client_update'),
+    path('client/<int:pk>/delete/',
+         ClientInfoDeleteView.as_view(), name='client_delete'),
+    path('conference/new/', CreateConferenceView.as_view(), name='new_conference'),
+    path('all-conferences/', views.all_conferences, name='all-conferences'),
+    path('conference/<int:id>/', views.conference_detail, name='conference_detail'),
+    path('conference/<int:pk>/update/',
+         ConferenceUpdateView.as_view(), name='conference_update'),
+    path('conference/<int:pk>/delete/',
+         ConferenceDeleteView.as_view(), name='conference_delete'),
+
+]

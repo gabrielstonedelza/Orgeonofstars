@@ -1,0 +1,10 @@
+.vid-container{
+    // width: 100%;
+    display: grid;
+    grid-template-columns: repeat(autofit,minmax(150px,1fr));
+    gap: 0.5rem;
+
+    video{
+        border: solid 2px silver;
+    }
+}

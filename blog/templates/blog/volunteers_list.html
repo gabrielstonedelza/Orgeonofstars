@@ -1,0 +1,29 @@
+{% extends "blog/base.html" %} 
+{% block content %}
+<div class="container mt-3">
+  <br />
+  <span style="position: fixed; ">
+    <a title="Become a volunteer" href="{% url 'volunteer_join' %}">
+        <i class="fas fa-plus-circle fa-3x"></i>
+    </a>
+  </span><h3 class="text-center mb-3">Our Volunteers</h3>
+  <br />
+  <section class="volunteer-section">
+    {% for v in volunteers %}
+      <div class="volunteer-container">
+        {% if v.photo %}
+          <div class="vimage mb-3">
+            <img class="z-depth-1-half" src="{{ v.photo.url }}" alt="">
+          </div>
+        {% endif %}
+   
+        <h6 class="ml-3">{{ v.name }}</h6>
+        
+      </div>
+    {% endfor %}
+  </section>
+  </div>
+
+  <!-- Modal -->
+  
+{% endblock %}

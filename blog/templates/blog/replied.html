@@ -1,0 +1,26 @@
+{% extends "blog/base2.html" %}
+
+{% block content %}
+<div class="message-main">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-10 col-lg-12 mb-3">
+                <div class="themessage">
+                    <img class="z-depth-1-half" src="{{ replied.sender.profile.profile_pic.url }}" alt="">
+                    <span class="ml-2">@{{ replied.sender }}</span>
+                    <br>
+                    <div class="instant-container mt-3 mb-3">
+                        <h3 class="text-center mb-3">{{ replied.title }}</h3>
+                        <p class="instant-content">{{ replied.message_content|safe }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="main-reply-section">
+            {% include "blog/inreply.html" %}
+        </div> -->
+    </div>
+</div>
+{% endblock %}

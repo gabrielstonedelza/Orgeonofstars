@@ -1,0 +1,55 @@
+{% extends "blog/base2.html" %}
+
+{% block content %}
+<div class="report-main">
+<div class="container">
+    <div class="row ">
+        <div class="col-xs-6 col-sm-6 col-md-6 mb-3 mt-4">
+            <div class="report-container">
+                <div class="report-img-username mb-3">
+                    <img src="{{ report.user.profile.profile_pic.url }}" alt=""> <span
+                        class="ml-2">@{{ report.user }}</span>
+                </div>
+                <br>
+                <div class="main-report-container mb-3">
+                    <h3 class="mb-3">{{ report.title }}</h3>
+                    {% if request.user in report.has_read.all %}
+                    <sup style="float: right;"><small class=" text-muted badge badge-default">Read</small></sup>
+                    {% else %}
+                    <sup style="float: right;"><small class="badge badge-danger">New</small></sup>
+                    {% endif %}
+                    <br>
+                    <p style="width: 100%;overflow:scroll;overflow-y: hidden;">{{ report.report|safe }}</p>
+                    {% if report.report_doc %}
+                     <a title="download attached file" href="{{ report.report_doc.url }}" class="butt" download="{{report.title}}" target="_blank">
+                         <i class="fas fa-download ml -3"></i> attached file
+                     </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="col-xs-6 col-sm-6 col-md-4 mb-3 mt-4 more-reports">
+            <br>
+            <h3 class="text-center mb-3">More reports</h3>
+            <br>
+            <ul class="list-group z-depth-1-half mb-3">
+                {% for r in reports %}
+                <li class="list-group-item">
+                    {% if request.user in report.has_read.all %}
+                    <sup style="float: right;"><small class=" text-muted badge badge-default">Read</small></sup>
+                    {% else %}
+                    <sup style="float: right;"><small class="badge badge-danger animated jello infinite">New</small></sup>
+                    {% endif %}
+                    <a href="{{ r.get_absolute_url }}">{{ r.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            <br>
+            <a class="butt" href="{% url 'reports' %}">View All</a>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

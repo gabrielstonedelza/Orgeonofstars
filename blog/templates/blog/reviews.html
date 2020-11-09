@@ -1,0 +1,107 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="container mt-3">
+    <br>
+    <h3 class="text-center mb-3">Reviews and Surveys</h3>
+    <a class="butt mb-3" href="{% url 'review_create' %}">Add a review</a>
+    <br>
+    <h5 class="mt-2 font-weight-bold">Results from  summer school survey</h5>
+    <br>
+    <div class="row mb-3">
+        {% for survey in all_surveys %}
+        <div class="col-xs-6 col-sm-6 col-md-4 mb-3">
+        <div class="card">
+            <!-- Card image -->
+            <div class="view overlay">
+            <img class="card-img-top" style="width: 100%;height: 250px;" src="{{ survey.user.school.photo.url }}" alt="user profile picture">
+            </div>
+            <!-- Card content -->
+            <div class="card-body elegant-color white-text rounded-bottom">
+            <!-- Title -->
+            <h4 class="card-title">
+                {% if survey.ratings == 5 %}
+                <i class="fas fa-star mt-3"></i>
+                <i class="fas fa-star mt-3"></i>
+                <i class="fas fa-star mt-3"></i>
+                <i class="fas fa-star mt-3"></i>
+                <i class="fas fa-star mt-3"></i>
+            {% elif survey.ratings == 4 %}
+                <i class="fas fa-star mt-3"></i>
+                <i class="fas fa-star mt-3"></i>
+                <i class="fas fa-star mt-3"></i>
+                <i class="fas fa-star mt-3"></i>
+            {% elif survey.ratings == 3 %}
+                <i class="fas fa-star mt-3"></i>
+                <i class="fas fa-star mt-3"></i>
+                <i class="fas fa-star mt-3"></i>
+            {% elif survey.ratings == 2 %}
+                <i class="fas fa-star mt-3"></i>
+                <i class="fas fa-star mt-3"></i>
+            {% elif survey.ratings == 1 %}
+                <i class="fas fa-star mt-3"></i>
+            {% endif %}
+                </h4>
+            <hr class="hr-light">
+            <!-- Text -->
+            <p class="card-text white-text mb-4">{{ survey.improvement }}</p>
+            <small class="text-muted">{{ survey.date_answered }}</small>
+            </div>
+        </div>
+        </div>
+        {% empty %}
+        <p>No reviews from summer school available</p>
+        {% endfor %}
+    </div>
+    <br>
+    <hr class="my-4">
+    <br>
+    <h3 class="text-center mb-3">Reviews</h3>
+    <div class="row mb-3">
+
+        {% for r in all_reviews %}
+        <div class="col-xs-6 col-sm-6 col-md-4 mb-3">
+            <div class="card">
+                <!-- Card image -->
+                <div class="view overlay">
+                <img style="width: 100%;height: 250px;" class="card-img-top" src="{{ r.reviewer.url }}" alt="user profile picture">
+                </div>
+                <!-- Card content -->
+                <div class="card-body elegant-color white-text rounded-bottom">
+                <!-- Title -->
+                <h4 class="card-title">
+                    {% if r.ratings == 5 %}
+                        <i class="fas fa-star mt-3"></i>
+                        <i class="fas fa-star mt-3"></i>
+                        <i class="fas fa-star mt-3"></i>
+                        <i class="fas fa-star mt-3"></i>
+                        <i class="fas fa-star mt-3"></i>
+                    {% elif r.ratings == 4 %}
+                        <i class="fas fa-star mt-3"></i>
+                        <i class="fas fa-star mt-3"></i>
+                        <i class="fas fa-star mt-3"></i>
+                        <i class="fas fa-star mt-3"></i>
+                    {% elif r.ratings == 3 %}
+                        <i class="fas fa-star mt-3"></i>
+                        <i class="fas fa-star mt-3"></i>
+                        <i class="fas fa-star mt-3"></i>
+                    {% elif r.ratings == 2 %}
+                        <i class="fas fa-star mt-3"></i>
+                        <i class="fas fa-star mt-3"></i>
+                    {% elif r.ratings == 1 %}
+                        <i class="fas fa-star mt-3"></i>
+                    {% endif %}
+                    </h4>
+                <hr class="hr-light">
+                <!-- Text -->
+                <p class="card-text white-text mb-4">{{ r.review_content }}</p>
+                <small class="text-muted">{{ r.date_posted }}</small>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No reviews available</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

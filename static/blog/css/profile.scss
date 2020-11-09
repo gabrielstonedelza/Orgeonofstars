@@ -1,0 +1,34 @@
+@import "./config";
+@import "./debody";
+.profile-main{
+    h3{
+        color: $light;
+    }
+  }
+
+.employee-profile-info{
+    padding: 20px;
+    border-radius: 7px;
+    background: #eff0f1;
+    .employee-profile-image{
+        img{
+            width: 200px;
+            height: 200px;
+            border-radius: 100px;
+            border: solid silver 2px;
+        }
+    }
+    .deinfo{
+        h4{
+            text-transform: capitalize;
+            font-weight: bold;
+            color: black;
+        }
+        small{
+            font-weight: bold;
+        }
+    }
+}
+label{
+    color: $light;
+}

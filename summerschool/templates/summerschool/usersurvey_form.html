@@ -1,0 +1,22 @@
+{% extends 'summerschool/school_base2.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container mt-3">
+    <br>
+    <h3 class="text-center mb-3">Take survey in just two minutes</h3>
+    <br>
+    <div class="row mb-3">
+        <div class="col-xs-6 col-sm-6 col-md-6 ml-auto mr-auto mb-3">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form|crispy }}
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="butt" style="padding: 10px;border-radius: 24px;border: none;font-weight: bold; color: white;background-color: #00887A;">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

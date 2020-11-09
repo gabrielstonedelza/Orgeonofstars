@@ -1,0 +1,25 @@
+{% extends "blog/base2.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container mt-3">
+    <br>
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 ml-auto mr-auto mb-3">
+            <h3 class="text-center font-weight-bold mb-4">Enter the code as you see it</h3>
+            <br>
+            <p class="text-center animated bounceInLeft font-weight-bold">{{ your_code }}</p>
+            <br>
+            <hr class="my-4">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form|crispy }}
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="butt">Check in</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

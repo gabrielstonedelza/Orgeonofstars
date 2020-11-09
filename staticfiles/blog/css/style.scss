@@ -1,0 +1,11 @@
+@import "./config";
+
+// navbar
+nav{
+    .nav-item{
+        a{
+            color: $light;
+            font-weight: bold;
+        }
+    }
+}

@@ -27,7 +27,7 @@ def register_school(request):
             kids_email = form.cleaned_data.get('email')
 
             if User.objects.filter(email=kids_email).exists():
-                messages.info(request, f"Sorry,a user with the same email already exists")
+                messages.info(request, "Sorry,a user with the same email already exists")
             else:
                 form.save()
                 Student.objects.create(student_email=kids_email)
@@ -36,7 +36,7 @@ def register_school(request):
                 msg["To"] = kids_email
                 msg.set_content(
                     "We are glad you have decided to join us in this studies,so you know it's going to be more fun than you expected,stay blessed and see you in class.")
-                hml = f"""
+                hml = """
                     <!Doctype html>
                     <html>
                     <body>
@@ -51,7 +51,7 @@ def register_school(request):
                 with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
                     smtp.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
                     smtp.send_message(msg)
-                    messages.success(request, f"Thank you for joining our summer tutoring program.")
+                    messages.success(request, "Thank you for joining our summer tutoring program.")
                     return redirect('school_login')
                 # to organization email
                 msg1["Subject"] = "A new Kid just joined the gradeschool summer tutoring program"
@@ -59,7 +59,7 @@ def register_school(request):
                 msg1["To"] = settings.EMAIL_HOST_USER
                 msg1.set_content(
                     "Got a new kid for the summer tutoring program.")
-                hml = f"""
+                hml = """
                     <!Doctype html>
                     <html>
                     <body>
@@ -75,7 +75,7 @@ def register_school(request):
                     smtp.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
                     smtp.send_message(msg1)
         else:
-            messages.info(request, f"Something went wrong")
+            messages.info(request, "Something went wrong")
     else:
         form = KidsSchoolRegister()
 
@@ -104,7 +104,7 @@ def kids_profile_school(request):
             ug_form = KidsSchoolUpdateForm(instance=request.user)
             ugp_form = KidsSchoolProfileUpdate(instance=request.user.school)
     else:
-        messages.info(request, f"sorry you are not in our school list")
+        messages.info(request, "sorry you are not in our school list")
         return redirect('summerhome')
 
     context = {
@@ -132,13 +132,13 @@ def school_login_request(request):
                     else:
                         return redirect('school_profile')
                 else:
-                    messages.info(request, f"sorry we don't have your name in our school lists")
+                    messages.info(request, "sorry we don't have your name in our school lists")
                     return redirect('main')
                 # Redirect to a success page.
             else:
-                messages.info(request, f"invalid username or password")
+                messages.info(request, "invalid username or password")
         else:
-            messages.info(request, f"invalid information given")
+            messages.info(request, "invalid information given")
     else:
         form = AuthenticationForm()
 

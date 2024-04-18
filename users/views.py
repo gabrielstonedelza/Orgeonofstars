@@ -27,7 +27,7 @@ def register(request):
                 form.save()
                 username = form.cleaned_data.get('username')
                 MyProfileUser.objects.create(profiler_email=usermail)
-                subject = f"New employee added."
+                subject = "New employee added."
                 message = f"An employee with the username {username} was just added."
                 from_email = settings.EMAIL_HOST_USER
                 to_list = [settings.EMAIL_HOST_USER]
@@ -93,9 +93,9 @@ def login_request(request):
                     return redirect('main')
                 else:
                     messages.info(request,
-                                  f"you already have an unexpired login token,meaning you have logged in on another "
-                                  f"device,please wait just a second and login again as we log you out of the other "
-                                  f"device")
+                                  "you already have an unexpired login token,meaning you have logged in on another "
+                                  "device,please wait just a second and login again as we log you out of the other "
+                                  "device")
                     euser = get_object_or_404(LoginConfirmCode, logged_user=user)
                     if euser:
                         euser.delete()

@@ -121,4 +121,4 @@ class UserSurvey(models.Model):
     date_answered = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Survey saved"
+        return "Survey saved"

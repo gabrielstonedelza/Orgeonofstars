@@ -50,7 +50,7 @@ def news_letter(request):
             form.save()
             title = form.cleaned_data.get('title').upper()
             update_message = form.cleaned_data.get('message')
-            send_my_mail(f"Hi from Orgeon of stars", settings.EMAIL_HOST_USER, subscribed_users,
+            send_my_mail("Hi from Orgeon of stars", settings.EMAIL_HOST_USER, subscribed_users,
                          {"title": title, "message": update_message},
                          "email_templates/news_letter.html")
             return redirect('newsletter_create')
@@ -79,7 +79,7 @@ def home(request):
             else:
                 form.save()
                 message = f"A new subscriber with the email '{email}' just subscribed to your newsletter."
-                send_my_mail(f"New subscriber", settings.EMAIL_HOST_USER, settings.EMAIL_HOST_USER,
+                send_my_mail("New subscriber", settings.EMAIL_HOST_USER, settings.EMAIL_HOST_USER,
                              {"message": message, "subscriber": email}, "email_templates/news_letter_subscribe.html")
 
                 return redirect('home')
@@ -119,11 +119,11 @@ class VolunteerFormView(CreateView):
         v_email = form.cleaned_data.get('email')
         v_name = form.cleaned_data.get('name')
         message = f"{v_name} just volunteered for Orgeon of stars"
-        v_message = f"Thank you for volunteering to work with Orgeon of stars,in order to know more about  you we will contact you soon,stay blessed."
+        v_message = "Thank you for volunteering to work with Orgeon of stars,in order to know more about  you we will contact you soon,stay blessed."
 
-        send_my_mail(f"New Volunteer", settings.EMAIL_HOST_USER, settings.EMAIL_HOST_USER,
+        send_my_mail("New Volunteer", settings.EMAIL_HOST_USER, settings.EMAIL_HOST_USER,
                      {"name": v_name, "message": message}, "email_templates/new_volunteer.html")
-        send_my_mail(f"Welcome to ORgeon of stars", settings.EMAIL_HOST_USER, v_email,
+        send_my_mail("Welcome to ORgeon of stars", settings.EMAIL_HOST_USER, v_email,
                      {"name": v_name, "message": v_message}, "email_templates/volunteer_message.html")
 
         return super().form_valid(form)
@@ -169,14 +169,14 @@ def join_trip(request):
         if form.is_valid():
             trip_email = form.cleaned_data.get('email')
             if JoinTrip.objects.filter(email=trip_email).exists():
-                messages.info(request, f"Email already exitst.")
+                messages.info(request, "Email already exitst.")
         else:
             form.save()
             name = form.cleaned_data.get('name')
             email = form.cleaned_data.get('email')
             phone = form.cleaned_data.get('phone')
 
-            t_message = f"Orgeon of stars is so delighted that you have decided to join our trip, saving lives and helping the vulnerable children is our top priority and we are happy that you've made it yours too.We will let you know of any other information before we embark on this journey.Stay blessed."
+            t_message = "Orgeon of stars is so delighted that you have decided to join our trip, saving lives and helping the vulnerable children is our top priority and we are happy that you've made it yours too.We will let you know of any other information before we embark on this journey.Stay blessed."
 
             send_my_mail(f"{name} wants to join the trip.", settings.EMAIL_HOST_USER, settings.EMAIL_HOST_USER,
                          {"name": name, "email": email, "phone": phone}, "email_templates/new_tripper.html")
@@ -184,7 +184,7 @@ def join_trip(request):
                          "email_templates/tripper_message.html")
 
             messages.success(
-                request, f"Thank you for joining us on this trip.")
+                request, "Thank you for joining us on this trip.")
             return redirect('events')
 
     else:
@@ -198,14 +198,14 @@ def join_trip(request):
 
 
 def become_partner(request):
-    partner_message = f"We are happy to see you and also partner with you.We will contact you soon for additional information.Stay blessed."
+    partner_message = "We are happy to see you and also partner with you.We will contact you soon for additional information.Stay blessed."
     if request.method == "POST":
         form = PartnershipForm(request.POST)
         if form.is_valid():
             partner_email = form.cleaned_data.get('email')
             if Partnership.objects.filter(email=partner_email).exists():
                 messages.info(
-                    request, f"A partner with the same email already exits.")
+                    request, "A partner with the same email already exits.")
 
             else:
                 form.save()
@@ -215,10 +215,10 @@ def become_partner(request):
 
                 send_my_mail(f"Thank you for your partnership {name}.", settings.EMAIL_HOST_USER, partner_email,
                              {"name": name, "message": partner_message}, "email_templates/partner_success_message.html")
-                send_my_mail(f"Got new partner", settings.EMAIL_HOST_USER, settings.EMAIL_HOST_USER,
+                send_my_mail("Got new partner", settings.EMAIL_HOST_USER, settings.EMAIL_HOST_USER,
                              {"name": name, "email": email, "phone": phone}, "email_templates/new_partner.html")
 
-                messages.success(request, f"Thank you for joining us..")
+                messages.success(request, "Thank you for joining us..")
                 return redirect('partners')
     else:
         form = PartnershipForm()
@@ -255,7 +255,7 @@ def report_list(request):
         page = request.GET.get('page')
         all_reports = paginator.get_page(page)
     else:
-        messages.info(request, f"Sorry we cannot find your login details")
+        messages.info(request, "Sorry we cannot find your login details")
         return redirect('login')
 
     context = {
@@ -283,7 +283,7 @@ def report_detail(request, id):
                 hasRead = True
         reports = Report.objects.all().order_by('-date_posted')[:6]
     else:
-        messages.info(request, f"Sorry we cannot find your login details")
+        messages.info(request, "Sorry we cannot find your login details")
         return redirect('login')
 
     context = {
@@ -321,12 +321,12 @@ def create_report(request):
                                  "name": request.user.username, },
                              "email_templates/report_success_message.html")
 
-                messages.success(request, f"Your report was created successfully.")
+                messages.success(request, "Your report was created successfully.")
                 return redirect('reports')
         else:
             form = ReportForm()
     else:
-        messages.info(request, f"Sorry we cannot find your login details")
+        messages.info(request, "Sorry we cannot find your login details")
         return redirect('login')
 
     context = {
@@ -348,7 +348,7 @@ def employees(request):
         employees = Profile.objects.filter(verified=True)
 
     else:
-        messages.info(request, f"Sorry we cannot find your login details")
+        messages.info(request, "Sorry we cannot find your login details")
         return redirect('login')
     context = {
         'employees': employees,
@@ -414,7 +414,7 @@ def post_list(request):
         posts = paginator.get_page(page)
 
     else:
-        messages.info(request, f"Sorry your login details were not found")
+        messages.info(request, "Sorry your login details were not found")
         return redirect('login')
 
     context = {
@@ -461,7 +461,7 @@ def post_detail(request, id):
         else:
             form = CommentsForm()
     else:
-        messages.info(request, f"Sorry your login details were not found")
+        messages.info(request, "Sorry your login details were not found")
         return redirect('login')
 
     context = {
@@ -501,20 +501,20 @@ def check_in(request):
                 UsersCheckedIn.objects.create(
                     user=request.user, check_in=checkin_code, check_date=date.today())
                 if request.user.username == "joselyn":
-                    send_my_mail(f"You just checked in at Orgeon", settings.EMAIL_HOST_USER, admin_user.email,
+                    send_my_mail("You just checked in at Orgeon", settings.EMAIL_HOST_USER, admin_user.email,
                              {"name": request.user.username, }, "email_templates/checkin_alert.html")
                 else:
                     send_my_mail(f"New check in from {request.user.username}", settings.EMAIL_HOST_USER, admin_user.email,
                                  {"name": request.user.username, }, "email_templates/checkin_alert.html")
 
-                send_my_mail(f"Successful Check in", settings.EMAIL_HOST_USER, request.user.email,
+                send_my_mail("Successful Check in", settings.EMAIL_HOST_USER, request.user.email,
                              {"name": request.user.username, }, "email_templates/users_checkin_alert.html")
                 return redirect('main')
             else:
-                messages.info(request, f"Wrong code entered")
+                messages.info(request, "Wrong code entered")
         else:
             messages.info(
-                request, f"Invalid code,please type code as you see it")
+                request, "Invalid code,please type code as you see it")
     else:
         form = CheckInForm()
 
@@ -553,7 +553,7 @@ def main(request):
         posts = paginator.get_page(page)
 
     else:
-        messages.info(request, f"Sorry your login details were not found")
+        messages.info(request, "Sorry your login details were not found")
         return redirect('login')
     context = {
         "chat": v_users,
@@ -612,7 +612,7 @@ def user_activities(request):
         checkins = paginator.get_page(page)
 
     else:
-        messages.info(request, f"Sorry your login details were not found")
+        messages.info(request, "Sorry your login details were not found")
         return redirect('login')
 
     context = {
@@ -705,7 +705,7 @@ def client_list(request):
         my_notify = my_notifications(request.user)
         mycheck = mycheck_in(request.user)
     else:
-        messages.info(request, f"Sorry your login details were not found")
+        messages.info(request, "Sorry your login details were not found")
         return redirect('login')
 
     context = {
@@ -728,7 +728,7 @@ def client_detail(request, id):
         mycheck = mycheck_in(request.user)
 
     else:
-        messages.info(request, f"Sorry your login details were not found")
+        messages.info(request, "Sorry your login details were not found")
         return redirect('login')
 
     context = {
@@ -774,7 +774,7 @@ def create_client(request):
                                               assessment_phase_details=a_details, development_phase_details=d_details,
                                               planning_phase_details=p_details, implementation_phase_details=i_details,
                                               evaluation_phase_details=e_details, star_phase_details=s_details)
-            messages.success(request, f"Client was created successfully")
+            messages.success(request, "Client was created successfully")
             return redirect('clients')
 
     else:
@@ -799,7 +799,7 @@ def client_update(request, id):
         form = ClientUpdateForm(request.POST, request.FILES, instance=client)
         if form.is_valid():
             form.save()
-            messages.success(request, f"Client details updated")
+            messages.success(request, "Client details updated")
             return redirect('clients')
     else:
         form = ClientUpdateForm(instance=client)
@@ -849,10 +849,10 @@ def create_reviews(request):
         if form.is_valid():
             form.save()
 
-            send_my_mail(f"New review posted", settings.EMAIL_HOST_USER, settings.EMAIL_HOST_USER, {"name": ""},
+            send_my_mail("New review posted", settings.EMAIL_HOST_USER, settings.EMAIL_HOST_USER, {"name": ""},
                          "email_templates/review_alert.html")
 
-            messages.success(request, f'Review Added.')
+            messages.success(request, 'Review Added.')
             return redirect('reviews')
 
     else:

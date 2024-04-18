@@ -440,7 +440,7 @@ class Reviews(models.Model):
     date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"New review posted"
+        return "New review posted"
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

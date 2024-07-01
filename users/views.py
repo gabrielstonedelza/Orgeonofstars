@@ -9,10 +9,10 @@ from .models import Profile, MyProfileUser, LoginConfirmCode
 import sys
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
-import random
 from blog.process_mail import send_my_mail
 from blog.check_ins import mycheck_in
 from blog.notifications import my_notifications
+import secrets
 
 
 @login_required()
@@ -75,7 +75,7 @@ def profile(request):
 
 def login_request(request):
     uuser = ''
-    user_get_login_code = random.randint(1, 10000)
+    user_get_login_code = secrets.SystemRandom().randint(1, 10000)
     has_login_code_already = False
     user_platform = sys.platform
     if request.method == "POST":
